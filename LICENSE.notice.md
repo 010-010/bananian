@@ -1,6 +1,7 @@
-The kernel binaries: zImage are licensed under GNU GPL version 2.0
-WITH Linux-syscall-note. See KERNEL.md for information on how/where to obtain
-the source code and build it.
+The kernel binary zImage is licensed under the GNU GPL version 2.0
+(with the Linux-syscall-note).
+See KERNEL.md for information on how/where to obtain the source code and build
+it.
 
 The device tree blob (`dtb`) was also built from the kernel source by setting
 `TARGET_PRODUCT=argon`.
