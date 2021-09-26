@@ -51,7 +51,8 @@ $ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- TARGET_PRODUCT=argon
 
 The produced file `arch/arm/boot/zImage` is the kernel.
 Since this is the official stock kernel and the configuration is based on
-/proc/config.gz on the phone, this kernel should work with KaiOS.
+/proc/config.gz on the phone, this kernel should work with KaiOS, except for
+some minor incompatibilities (like the slide not working)
 Note that you have to replace the modules in /system/lib/modules if you want to
 use it with KaiOS.
 
