@@ -1,0 +1,8 @@
+DisplayName: Qualcomm Remotefs daemon
+ConfigName: CONFIG_PACKAGE_RMTFS
+Source: https://gitlab.com/affenull2345/rmtfs-8110.git#master
+Priority: optional
+
+Dependency: CONFIG_PACKAGE_QRTR
+
+File: rmtfs_0.2+git20210424.e54cfd7e-2_armhf.deb

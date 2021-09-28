@@ -1,0 +1,15 @@
+#!/bin/sh
+
+echo "==> Building $1"
+
+if [ -f ".$1.stamp" ] && [ ".$1.stamp" -nt "$1" ]; then
+  echo "===> Already built, run \`touch $1\` to rebuild"
+else
+  if [ -f "$1/debian/source/format" ] && \
+    [ "x$(cat "$1/debian/source/format")" = \
+      "x3.0 (quilt)" ]
+  then
+    (cd "$1" && GIT_DIR="../$1.git" git deborig --force)
+  fi
+  make package PACKAGE_PATH="$(pwd)/$1"
+fi

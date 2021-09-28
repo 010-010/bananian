@@ -61,7 +61,7 @@ $(CONFIG_OBJ)/gconf.glade: $(CONFIG_OBJ)/gconf
 	cp -f scripts/kconfig/$(@F) $(@D)
 
 generate-package-configs:
-	@scripts/generate-package-configs
+	@scripts/generate-package-configs.pl > packages/Config.in
 
 menuconfig: $(CONFIG_OBJ)/mconf generate-package-configs
 	@$< $(CONFIG_IN)
@@ -111,31 +111,33 @@ boot.img: initrd.img zImage bootimg.cfg
 
 debroot: packages
 	rm -rf debroot
-	debootstrap --include="$(DEFAULT_PACKAGES),$$(scripts/get-deps)" \
-		--arch armhf --foreign --merged-usr bullseye debroot/ \
-		$(MIRROR) || (rm -rf debroot && false)
+	dpkg-scanpackages . > Packages
+	debootstrap \
+	  --include="$(DEFAULT_PACKAGES),$$(scripts/get-deps.pl Packages)" \
+	  --arch armhf --foreign --merged-usr bullseye debroot/ \
+	  $(MIRROR) || (rm -rf debroot && false)
 
 .PHONY: download
 download: .config
-	@scripts/download-packages
+	@scripts/download-packages.pl
 
 .PHONY: packages
 packages: download
-	@scripts/build-packages
+	@scripts/build-packages.pl
 
 .PHONY: copy-files
 copy-files: packages modules
 	if [ ! -f debroot/etc/wpa_supplicant.conf ]; then \
-		echo 'network={' >> debroot/etc/wpa_supplicant.conf && \
-		echo '    ssid="SSID"' >> debroot/etc/wpa_supplicant.conf && \
-		echo '    psk="PSK"' >> debroot/etc/wpa_supplicant.conf && \
-		echo '}' >> debroot/etc/wpa_supplicant.conf; \
+	  echo 'network={' >> debroot/etc/wpa_supplicant.conf && \
+	  echo '    ssid="SSID"' >> debroot/etc/wpa_supplicant.conf && \
+	  echo '    psk="PSK"' >> debroot/etc/wpa_supplicant.conf && \
+	  echo '}' >> debroot/etc/wpa_supplicant.conf; \
 	fi
 	editor debroot/etc/wpa_supplicant.conf
 	mkdir -p debroot/lib/modules/
 	rm -rf debroot/lib/modules/3.10.49-bananian+
 	cp -rf modules debroot/lib/modules/3.10.49-bananian+
-	@scripts/copy-packages debroot/var/cache
+	cp -f *.deb debroot/var/cache
 
 .PHONY: package
 ifeq ($(PACKAGE_PATH),)
@@ -145,15 +147,15 @@ else
 package:
 	@echo "Building package in $(PACKAGE_PATH)..."
 	@TMPDEBS=$$(mktemp -d /tmp/bananian-debs.XXXXXXXX) && \
-	scripts/copy-packages "$$TMPDEBS" --skip-missing && \
-	(cd "$$TMPDEBS" && dpkg-scanpackages . /dev/null > Packages) && \
+	if ls *.deb >/dev/null 2>&1; then cp -f *.deb "$$TMPDEBS"; fi && \
+	(cd "$$TMPDEBS" && dpkg-scanpackages . > Packages) && \
 	echo '$(VERSION)' > /tmp/bananian-version && \
 	cd '$(PACKAGE_PATH)' && \
 	pdebuild --configfile '$(CURDIR)/pbuilderrc' \
-		--buildresult '$(CURDIR)' -- --host-arch armhf \
-		--bindmounts "$$TMPDEBS /tmp/bananian-version" \
-		--override-config --othermirror \
-		"deb [trusted=yes] file://$$TMPDEBS ./"; \
+	  --buildresult '$(CURDIR)' -- --host-arch armhf \
+	  --bindmounts "$$TMPDEBS /tmp/bananian-version" \
+	  --override-config --othermirror \
+	    "deb [trusted=yes] file://$$TMPDEBS ./"; \
 	pdebuildresult=$$?; rm -rf "$$TMPDEBS" /tmp/bananian-version; \
 	exit $$pdebuildresult
 endif
@@ -171,7 +173,7 @@ sysconfig: debroot
 debroot.tar: debroot copy-files sysconfig $(USE_QEMU_INSTALL)
 	rm -f $@
 	@(echo '==>> Creating debroot.tar...' && cd debroot && \
-		tar cf ../$@ --exclude=.gitignore *)
+	  tar cf ../$@ --exclude=.gitignore *)
 	@echo "Now you can execute the commands from README.md."
 
 .PHONY: install-to-device
@@ -184,7 +186,7 @@ install-to-device: all
 	@adb shell /data/unpack-debian.sh
 	$(ONDEV_BOOTSTRAP_CMD)
 	@adb shell rm /data/install-bootimage.sh /data/unpack-debian.sh \
-		/data/bootstrap-debian.sh
+	  /data/bootstrap-debian.sh
 
 .PHONY: clean
 clean:
