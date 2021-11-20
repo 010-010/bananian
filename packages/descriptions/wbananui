@@ -1,0 +1,2 @@
+wbananui is the new user interface for bananian. It uses Wayland for
+the window manager and Cairo for rendering.

@@ -1,0 +1,8 @@
+DisplayName: wBananui User Interface
+ConfigName: CONFIG_PACKAGE_WBANANUI
+Source: https://gitlab.com/affenull2345/wbananui.git#devel
+Priority: standard
+
+File: wbananui_0.1.0_armhf.deb
+File: libwbananui0_0.1.0_armhf.deb
+File: libwbananui0-dev_0.1.0_armhf.deb
