@@ -60,17 +60,25 @@ while (<packages/metadata/*>) {
     }
   } else {
     my @git;
-    if (!-d "$filename.git") {
-      print "==> Cloning $src into $filename\n";
-      @git = ("git", "clone", "--bare", $src, "$filename.git");
-      system(@git) == 0 or die("===> git clone failed\n");
+    if (!-d "dl/$filename.git") {
+      print "==> Creating local repository $filename\n";
+      @git = ("git", "init", "--bare", "-b", "__dummy", "dl/$filename.git");
+      system(@git) == 0 or die("===> git init failed\n");
     }
+    @git = ("git", "-C", "dl/$filename.git", "config", "advice.detachedHead", "false");
+    system(@git);
+    print "==> Setting up the remote\n";
+    @git = ("git", "-C", "dl/$filename.git", "remote", "rm", "origin");
+    system(@git);
+    @git = ("git", "-C", "dl/$filename.git", "remote", "add", "origin", $src);
+    system(@git) == 0 or die("===> could not add git remote\n");
     print "==> Updating repository for $filename\n";
-    @git = ("git", "-C", "$filename.git", "fetch", "origin");
+    @git = ("git", "-C", "dl/$filename.git", "fetch", "origin");
     system(@git) == 0 or die("===> git fetch failed\n");
     print "==> Checking out repository at $at\n";
-    mkdir $filename; # Failures ignored
-    @git = ("git", "-C", "$filename.git", "--work-tree", "../$filename/", "checkout", $at);
+    mkdir "pkg-src";
+    mkdir "pkg-src/$filename"; # Failures ignored
+    @git = ("git", "-C", "dl/$filename.git", "--work-tree", "../../pkg-src/$filename/", "checkout", "origin/$at");
     system(@git) == 0 or die("===> git checkout failed\n");
   }
 }
