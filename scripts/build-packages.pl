@@ -84,6 +84,6 @@ sub resolvetree {
 resolvetree($deptree);
 
 for (@resolved) {
-  my @args = ("scripts/builtin-build", "pkg-src/$_", "dl/$_.git");
+  my @args = ("scripts/builtin-build", "pkg-src/$_", "dl/$_.git", $_);
   system(@args) == 0 or die("==> Build failed\n");
 }

@@ -2,14 +2,17 @@
 
 echo "==> Building $1"
 
-if [ -f ".$1.stamp" ] && [ ".$1.stamp" -nt "$1" ]; then
+bananian=$(pwd)
+
+if [ -f ".$3.stamp" ] && [ ".$3.stamp" -nt "$1" ]; then
   echo "===> Already built, run \`touch $1\` to rebuild"
 else
   if [ -f "$1/debian/source/format" ] && \
     [ "x$(cat "$1/debian/source/format")" = \
       "x3.0 (quilt)" ]
   then
-    (cd "$1" && GIT_DIR="$(pwd)/$2" git deborig --force)
+    (cd "$1" && GIT_DIR="$bananian/$2" git deborig --force)
   fi
-  make package PACKAGE_PATH="$(pwd)/$1"
+  make package PACKAGE_PATH="$bananian/$1"
+  touch ".$3.stamp"
 fi
