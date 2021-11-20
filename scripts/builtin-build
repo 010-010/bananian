@@ -9,7 +9,7 @@ else
     [ "x$(cat "$1/debian/source/format")" = \
       "x3.0 (quilt)" ]
   then
-    (cd "$1" && GIT_DIR="../dl/$1.git" git deborig --force)
+    (cd "$1" && GIT_DIR="$(pwd)/$2" git deborig --force)
   fi
   make package PACKAGE_PATH="$(pwd)/$1"
 fi
