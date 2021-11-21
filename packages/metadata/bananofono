@@ -1,6 +1,6 @@
 DisplayName: oFono mobile telephony manager
 ConfigName: CONFIG_PACKAGE_OFONO
-Source: https://gitlab.com/affenull2345/bananofono.git#debian
+Source: https://gitlab.com/bananian/bananofono.git#debian
 Priority: standard
 
 Dependency: CONFIG_PACKAGE_DEVICE_MODEM_QCOM

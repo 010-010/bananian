@@ -1,6 +1,6 @@
 DisplayName: Qualcomm Remotefs daemon
 ConfigName: CONFIG_PACKAGE_RMTFS
-Source: https://gitlab.com/affenull2345/rmtfs-8110.git#master
+Source: https://gitlab.com/bananian/rmtfs-8110.git#master
 Priority: optional
 
 Dependency: CONFIG_PACKAGE_QRTR

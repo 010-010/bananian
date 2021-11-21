@@ -1,6 +1,6 @@
 DisplayName: Qualcomm IPC router
 ConfigName: CONFIG_PACKAGE_QRTR
-Source: https://gitlab.com/affenull2345/qrtr.git#master
+Source: https://gitlab.com/bananian/qrtr.git#master
 Priority: optional
 
 File: qrtr_0.3+git20201207.9dc7a8854-1_armhf.deb

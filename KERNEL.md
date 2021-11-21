@@ -32,11 +32,11 @@ $ cd ..
 
 # Compiling the forked kernel
 
-Clone the kernel from <https://gitlab.com/affenull2345/kernel-nokia-8110>
+Clone the kernel from <https://gitlab.com/bananian/kernel-nokia-8110>
 recursively:
 
 ```sh
-$ git clone --recursive https://gitlab.com/affenull2345/kernel-nokia-8110
+$ git clone --recursive https://gitlab.com/bananian/kernel-nokia-8110
 ```
 
 Compile the kernel:
@@ -62,7 +62,7 @@ Download kernel:
 
     $ git clone -b LF.BR.1.2.8 https://source.codeaurora.org/quic/la/kernel/msm-3.10 kernel
 
-Download <https://gitlab.com/affenull2345/bananian/-/raw/master/kernel-config>
+Download <https://gitlab.com/bananian/bananian/-/raw/master/kernel-config>
 into the kernel.
 
 Add Prima WLAN kernel module:
