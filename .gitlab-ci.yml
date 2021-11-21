@@ -12,6 +12,8 @@ build:
   artifacts:
     paths:
       - '*.deb'
+  interruptible: true
+
 pages:
   stage: deploy
   script:
