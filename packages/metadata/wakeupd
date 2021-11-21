@@ -1,0 +1,6 @@
+DisplayName: WakeupManager daemon
+ConfigName: CONFIG_PACKAGE_WAKEUPD
+Source: https://gitlab.com/affenull2345/wakeupd.git#devel
+Priority: standard
+
+File: wakeupd_0.1.0_armhf.deb
