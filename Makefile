@@ -79,7 +79,8 @@ nconfig: $(CONFIG_OBJ)/nconf generate-package-configs
 help:
 	@echo 'Cleaning targets:'
 	@echo '  clean              - Remove packages, root and other generated'
-	@echo '                       files, excluding configuration'
+	@echo '                       files, excluding config and downloads'
+	@echo '  distclean          - Remove almost everything'
 	@echo ''
 	@echo 'Configuration targets:'
 	@echo '  config             - Update current config utilising a line-oriented program'
@@ -190,4 +191,8 @@ install-to-device: all
 
 .PHONY: clean
 clean:
-	rm -rf *.deb $(OUTPUTS) debs
+	rm -rf *.deb $(OUTPUTS) pkg-src
+
+.PHONY: distclean
+distclean:
+	rm -rf *.deb $(OUTPUTS) pkg-src dl .config .config.old $(CONFIG_OBJ)
