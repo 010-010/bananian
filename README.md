@@ -133,20 +133,14 @@ $ ssh user@X.X.X.X # Where X.X.X.X is your the phone's IP address
 
 To get root access, use sudo.
 
-### Window list
-To show a list of open windows, press the power button with the slide open.
-
-*This might not work if the phone was booted with the slide open. If the screen
-turns off when pressing the power button, close the slide completely, open it
-and try again.*
-
 ### Bugs
 Please report an issue if you find a bug.
 
 ### Contribute
 If you would like to contribute, you can always submit a merge request.
-If you want to write an app, check out some of the existing apps and also the
-[Protocol Documentation](https://affenull2345.gitlab.io/bananian/Bananui-Protocol.html).
+If you need help developing an app, ask in the **App development** section of
+Bananian's Matrix space.
+
 ### Kernel
 See [KERNEL.md](KERNEL.md)
 
