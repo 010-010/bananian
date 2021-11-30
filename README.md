@@ -1,5 +1,7 @@
 # Bananian - Debian for the Nokia 8110 4G and a UI
 
+Bananian now has its own [Matrix space](https://matrix.to/#/#bananian-sfp-os:matrix.org)!
+
 [How to build Bananian](#building)
 
 ![Screenshot](screenshot.jpg)
@@ -20,7 +22,7 @@ system onto your phone.
    meant to be installed side-by-side with KaiOS (into the recovery partition).
 
 ### Building
-> **NOTE: This has been tested only on Debian GNU/Linux. Building on
+> **NOTE: This has been tested only on Debian and Devuan GNU/Linux. Building on
 > Debian-based
 > distributions such as Ubuntu might work, but this will certainly not work on
 > other operating systems.**
