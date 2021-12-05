@@ -46,7 +46,7 @@ $ cd kernel
 $ cp kernel-config .config
 $ make menuconfig ARCH=arm
   < add/remove some configuration options >
-$ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- TARGET_PRODUCT=argon
+$ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- TARGET_PRODUCT=argon
 ```
 
 The produced file `arch/arm/boot/zImage` is the kernel.
@@ -82,7 +82,7 @@ $ cd kernel
 $ cp kernel-config .config
 $ make menuconfig ARCH=arm
   < add/remove some configuration options >
-$ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf-
+$ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi-
 $ cat dtb arch/arm/boot/zImage > zImage
 ```
 
