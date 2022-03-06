@@ -2,14 +2,16 @@
 
 mainmenu "Bananian Configuration"
 
-config CONFIG_HOSTNAME
-	string "Host name"
-	default "nokia-8110-4g"
-	help
-	  The name of the device in the network
+source "devices/Config.in"
 	
 menu "Packages"
 
 source "packages/Config.in"
 
 endmenu
+
+config CONFIG_HOSTNAME
+	string "Host name"
+	default "bananaphone"
+	help
+	  The name of the device in the network

@@ -1,0 +1,6 @@
+DisplayName: Device startup scripts for Nokia 8110 4G
+ConfigName: CONFIG_PACKAGE_DEVICE_STARTUP_ARGON
+Source: https://gitlab.com/bananian/device-startup-8110.git#devel
+Priority: optional
+
+File: device-startup_0.2.1_all.deb

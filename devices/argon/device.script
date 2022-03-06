@@ -1,0 +1,13 @@
+#!/bin/sh
+
+. './scripts/device-tools/gitlab-kernel.sh'
+
+case "$1" in
+  get-kernel)
+    gitlab_kernel bananian/kernel-nokia-8110 master
+    ;;
+  *)
+    echo "Unknown command $1" >&2
+    exit 1
+    ;;
+esac

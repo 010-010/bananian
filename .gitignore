@@ -1,0 +1,11 @@
+*.bak
+.config
+.config.old
+boot.img
+bootimg.cfg
+initrd.img
+zImage-*
+scripts/config/
+/tmp/
+packages/Config.in
+.*.stamp

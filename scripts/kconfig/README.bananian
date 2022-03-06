@@ -1,1 +1,3 @@
-This is a copy of buildroot's kconfig version modified for Bananian.
+This version of kconfig was taken from Buildroot and has been modified to fit
+Bananian. Although the Bananian scripts are licensed under GPLv3, this code
+remains under the GPLv2.

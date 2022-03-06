@@ -1,0 +1,12 @@
+# vim: ft=kconfig
+
+config CONFIG_DEV_KERNEL
+	string
+
+choice CONFIG_DEVICE
+	prompt "Device model"
+	default CONFIG_DEVICE_ARGON
+
+source "devices/argon/Config.in"
+
+endchoice

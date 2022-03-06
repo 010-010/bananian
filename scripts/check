@@ -39,6 +39,9 @@ root () {
 	if [ "x`id -u`" != x0 ]; then
 		echo "You are not running as root."
 		exit 1
+	elif [ -n "$FAKEROOTKEY" ] && [ 1 != "$FORCEFAKEROOT" ]; then
+		echo "Fakeroot not supported. Pass FORCEFAKEROOT=1 to build anyway"
+		exit 1
 	fi
 }
 

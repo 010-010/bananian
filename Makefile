@@ -1,4 +1,4 @@
-# Copyright (C) 2020-2021 Affe Null <affenull2345@gmail.com>
+# Copyright (C) 2020-2022 Affe Null <affenull2345@gmail.com>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ else
 ONDEV_BOOTSTRAP_CMD = @adb shell /data/bootstrap-debian.sh
 USE_QEMU_INSTALL =
 endif
-DEFAULT_PACKAGES = hicolor-icon-theme,adwaita-icon-theme,openssh-server,vim,wpasupplicant,man-db,busybox,sudo,pulseaudio,$(EXTRA_PACKAGES)
+DEFAULT_PACKAGES = hicolor-icon-theme,adwaita-icon-theme,openssh-server,vim,network-manager,man-db,busybox,sudo,pulseaudio,$(EXTRA_PACKAGES)
 MIRROR = http://deb.debian.org/debian
 
 ifeq ($(wildcard .config),)
@@ -43,7 +43,7 @@ all: .config check packages $(OUTPUTS)
 
 endif
 
-VERSION=0.2.1
+VERSION=0.3.0
 export VERSION
 RELEASE=0
 export RELEASE
@@ -107,6 +107,12 @@ initrd.img: ramdisk
 	rm -f $@
 	scripts/pack-initrd $@ $<
 
+zImage:
+	@scripts/device-script.pl get-kernel
+
+.PHONY: kernel-update
+kernel-update: zImage
+
 boot.img: initrd.img zImage bootimg.cfg
 	abootimg --create $@ -f bootimg.cfg -k zImage -r $<
 
@@ -127,7 +133,7 @@ packages: download
 	@scripts/build-packages.pl
 
 .PHONY: copy-files
-copy-files: packages modules
+copy-files: packages zImage
 	if [ ! -f debroot/etc/wpa_supplicant.conf ]; then \
 	  echo 'network={' >> debroot/etc/wpa_supplicant.conf && \
 	  echo '    ssid="SSID"' >> debroot/etc/wpa_supplicant.conf && \
@@ -135,10 +141,10 @@ copy-files: packages modules
 	  echo '}' >> debroot/etc/wpa_supplicant.conf; \
 	fi
 	editor debroot/etc/wpa_supplicant.conf
-	mkdir -p debroot/lib/modules/
-	rm -rf debroot/lib/modules/3.10.49-bananian+
-	cp -rf modules debroot/lib/modules/3.10.49-bananian+
-	cp -f *.deb debroot/var/cache
+	rm -rf debroot/lib/modules
+	cp -rf zImage-modules debroot/lib/modules
+	mkdir -p debroot/var/cache/bananian-bootstrap
+	cp -f *.deb debroot/var/cache/bananian-bootstrap
 
 .PHONY: package
 ifeq ($(PACKAGE_PATH),)
@@ -195,4 +201,4 @@ clean:
 
 .PHONY: distclean
 distclean:
-	rm -rf *.deb $(OUTPUTS) pkg-src dl .config .config.old $(CONFIG_OBJ)
+	rm -rf *.deb $(OUTPUTS) pkg-src dl .config .config.old $(CONFIG_OBJ) zImage*

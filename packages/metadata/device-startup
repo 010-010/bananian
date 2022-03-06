@@ -1,6 +1,0 @@
-DisplayName: Device startup scripts
-ConfigName: CONFIG_PACKAGE_DEVICE_STARTUP
-Source: https://gitlab.com/bananian/device-startup-8110.git#devel
-Priority: required
-
-File: device-startup_0.2.1_all.deb

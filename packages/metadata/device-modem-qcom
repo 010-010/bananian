@@ -1,7 +1,7 @@
 DisplayName: Support for Qualcomm MSM modems
 ConfigName: CONFIG_PACKAGE_DEVICE_MODEM_QCOM
 Source: https://gitlab.com/bananian/device-modem-qcom.git#devel
-Priority: standard
+Priority: optional
 
 Dependency: CONFIG_PACKAGE_RMTFS
 
