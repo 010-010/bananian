@@ -15,7 +15,8 @@
 #
 # Makefile for bananian (installer)
 
-OUTPUTS = initrd.img boot.img debroot debroot.tar
+DEBROOT = debroot
+OUTPUTS = initrd.img boot.img $(DEBROOT) debroot.tar
 # Pass USE_QEMU=1 to the make command to bootstrap on the build machine
 USE_QEMU = 0
 ifeq ($(USE_QEMU),1)
@@ -116,13 +117,13 @@ kernel-update: zImage
 boot.img: initrd.img zImage bootimg.cfg
 	abootimg --create $@ -f bootimg.cfg -k zImage -r $<
 
-debroot: packages
-	rm -rf debroot
+$(DEBROOT): packages
+	rm -rf $(DEBROOT)
 	dpkg-scanpackages . > Packages
 	debootstrap \
 	  --include="$(DEFAULT_PACKAGES),$$(scripts/get-deps.pl Packages)" \
-	  --arch armhf --foreign --merged-usr bullseye debroot/ \
-	  $(MIRROR) || (rm -rf debroot && false)
+	  --arch armhf --foreign --merged-usr bullseye $(DEBROOT)/ \
+	  $(MIRROR) || (rm -rf $(DEBROOT) && false)
 
 .PHONY: download
 download: .config
@@ -134,17 +135,10 @@ packages: download
 
 .PHONY: copy-files
 copy-files: packages zImage
-	if [ ! -f debroot/etc/wpa_supplicant.conf ]; then \
-	  echo 'network={' >> debroot/etc/wpa_supplicant.conf && \
-	  echo '    ssid="SSID"' >> debroot/etc/wpa_supplicant.conf && \
-	  echo '    psk="PSK"' >> debroot/etc/wpa_supplicant.conf && \
-	  echo '}' >> debroot/etc/wpa_supplicant.conf; \
-	fi
-	editor debroot/etc/wpa_supplicant.conf
-	rm -rf debroot/lib/modules
-	cp -rf zImage-modules debroot/lib/modules
-	mkdir -p debroot/var/cache/bananian-bootstrap
-	cp -f *.deb debroot/var/cache/bananian-bootstrap
+	rm -rf $(DEBROOT)/lib/modules
+	cp -rf zImage-modules $(DEBROOT)/lib/modules
+	mkdir -p $(DEBROOT)/var/cache/bananian-bootstrap
+	cp -f *.deb $(DEBROOT)/var/cache/bananian-bootstrap
 
 .PHONY: package
 ifeq ($(PACKAGE_PATH),)
@@ -169,17 +163,17 @@ endif
 
 ifeq ($(USE_QEMU),1)
 .PHONY: qemu-install
-qemu-install: debroot copy-files sysconfig
+qemu-install: $(DEBROOT) copy-files sysconfig
 	@scripts/qemubootstrap
 endif
 
 .PHONY: sysconfig
-sysconfig: debroot
+sysconfig: $(DEBROOT)
 	@scripts/sysconfig
 
-debroot.tar: debroot copy-files sysconfig $(USE_QEMU_INSTALL)
+debroot.tar: $(DEBROOT) copy-files sysconfig $(USE_QEMU_INSTALL)
 	rm -f $@
-	@(echo '==>> Creating debroot.tar...' && cd debroot && \
+	@(echo '==>> Creating debroot.tar...' && cd $(DEBROOT) && \
 	  tar cf ../$@ --exclude=.gitignore *)
 	@echo "Now you can execute the commands from README.md."
 
