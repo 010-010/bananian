@@ -8,8 +8,7 @@ build:
   script:
     - pbuilder create --distribution bullseye
     - cp allpkgs.config .config
-    - mount DEBROOT=/bananian-debroot
-    - make USE_QEMU=1
+    - make USE_QEMU=1 DEBROOT=/bananian-debroot
   artifacts:
     paths:
       - '*.deb'
