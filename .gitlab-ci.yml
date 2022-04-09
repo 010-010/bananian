@@ -3,11 +3,12 @@ image: "debian:bullseye"
 build:
   stage: build
   before_script:
-    - apt update && apt install cpio abootimg debootstrap pbuilder qemu-user -y
+    - apt update && apt install cpio abootimg debootstrap pbuilder qemu-user-static -y
     - sed -i 's/^.*umount "$TARGET\/proc".*$//' /usr/share/debootstrap/functions
   script:
     - pbuilder create --distribution bullseye
     - cp allpkgs.config .config
+    - mount
     - make USE_QEMU=1
   artifacts:
     paths:
