@@ -21,4 +21,4 @@ set -e
 
 echo "==>> Configuring system"
 echo "===>> Setting hostname to $CONFIG_HOSTNAME"
-echo "$CONFIG_HOSTNAME" > debroot/etc/hostname
+echo "$CONFIG_HOSTNAME" > $DEBROOT/etc/hostname

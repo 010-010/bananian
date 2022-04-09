@@ -29,6 +29,8 @@ endif
 DEFAULT_PACKAGES = hicolor-icon-theme,adwaita-icon-theme,openssh-server,vim,network-manager,man-db,busybox,sudo,pulseaudio,$(EXTRA_PACKAGES)
 MIRROR = http://deb.debian.org/debian
 
+export DEBROOT
+
 ifeq ($(wildcard .config),)
 
 .PHONY: all
