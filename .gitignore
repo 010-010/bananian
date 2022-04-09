@@ -4,7 +4,7 @@
 boot.img
 bootimg.cfg
 initrd.img
-zImage-*
+zImage*
 scripts/config/
 /tmp/
 packages/Config.in
