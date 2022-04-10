@@ -176,7 +176,7 @@ sysconfig: $(DEBROOT)
 debroot.tar: $(DEBROOT) copy-files sysconfig $(USE_QEMU_INSTALL)
 	rm -f $@
 	@(echo '==>> Creating debroot.tar...' && cd $(DEBROOT) && \
-	  tar cf ../$@ --exclude=.gitignore *)
+	  tar cf $(CURDIR)/$@ --exclude=.gitignore *)
 	@echo "Now you can execute the commands from README.md."
 
 .PHONY: install-to-device
