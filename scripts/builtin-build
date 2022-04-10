@@ -13,6 +13,5 @@ else
   then
     (cd "$1" && GIT_DIR="$bananian/$2" git deborig --force)
   fi
-  make package PACKAGE_PATH="$bananian/$1"
-  touch ".$3.stamp"
+  make package PACKAGE_PATH="$bananian/$1" && touch ".$3.stamp"
 fi
