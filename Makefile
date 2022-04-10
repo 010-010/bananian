@@ -193,7 +193,7 @@ install-to-device: all
 
 .PHONY: clean
 clean:
-	rm -rf *.deb $(OUTPUTS) pkg-src
+	rm -rf *.deb $(OUTPUTS) pkg-src dl/*.git/index
 
 .PHONY: distclean
 distclean:
