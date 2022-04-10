@@ -24,4 +24,4 @@ trap "exit 2" INT TERM
 mount -o bind /dev $DEBROOT/dev
 mount -o bind /proc $DEBROOT/proc
 mount -o bind /sys $DEBROOT/sys
-chroot $DEBROOT /bin/sh -c 'debootstrap/debootstrap --second-stage; cd /var/cache && dpkg -i *.deb && rm -f *.deb && adduser --gecos "Bananian User" user && adduser user sudo'
+chroot $DEBROOT /bin/sh -c 'debootstrap/debootstrap --second-stage; cd /var/cache/bananian-bootstrap && dpkg -i *.deb && rm -f *.deb && adduser --gecos "Bananian User" user && adduser user sudo'
