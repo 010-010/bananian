@@ -174,7 +174,7 @@ sysconfig: $(DEBROOT)
 	@scripts/sysconfig
 
 debroot.tar: $(DEBROOT) copy-files sysconfig $(USE_QEMU_INSTALL)
-	rm -f $@
+	rm -f $@ $(DEBROOT)/etc/ssh/ssh_host_*
 	@(echo '==>> Creating debroot.tar...' && cd $(DEBROOT) && \
 	  tar cf $(CURDIR)/$@ --exclude=.gitignore *)
 	@echo "Now you can execute the commands from README.md."

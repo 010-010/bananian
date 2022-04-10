@@ -6,7 +6,7 @@ cat /dev/kmsg &
 
 echo '<bananian-init> Executing additional scripts'
 
-for script in /scripts/*; do
+for script in /scripts/pre-mount/*; do
   if [ -x "$script" ]; then
     echo "<bananian-init> -> $script"
     "$script" "$@"
@@ -24,6 +24,17 @@ mount -o move /sys /root/sys
 mount -o move /dev /root/dev
 mkdir -p /root/dev/pts
 mount -t devpts devpts /root/dev/pts
+
+for script in /scripts/post-mount/*; do
+  if [ -x "$script" ]; then
+    echo "<bananian-init> -> $script"
+    "$script" "$@"
+    script_status=$?
+    if [ "$?" != 0 ]; then
+      echo "<bananian-init> --> failed with $?"
+    fi
+  fi
+done
 
 echo '<bananian-init> Starting real init'
 sync
