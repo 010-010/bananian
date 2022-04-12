@@ -5,6 +5,7 @@ build:
   before_script:
     - apt update && apt install cpio abootimg debootstrap pbuilder qemu-user-static -y
     - sed -i 's/^.*umount "$TARGET\/proc".*$//' /usr/share/debootstrap/functions
+    - sed -i 's/CONTAINER=""/CONTAINER="docker"/' /usr/share/debootstrap/functions
   script:
     - pbuilder create --distribution bullseye
     - cp allpkgs.config .config
