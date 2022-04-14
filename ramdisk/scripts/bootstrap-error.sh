@@ -1,4 +1,4 @@
-#!/system/bin/sh
+#!/sbin/sh
 # Copyright (C) 2020-2021 Affe Null <affenull2345@gmail.com>
 # 
 # This program is free software: you can redistribute it and/or modify
@@ -16,9 +16,9 @@
 #
 
 for step in 0 1 2 3 4; do
-  echo 255 > /sys/class/leds/button-backlight/brightness
-  echo 500 > /sys/class/timed_output/vibrator/enable
+  echo 255 > /root/sys/class/leds/button-backlight/brightness
+  echo 500 > /root/sys/class/timed_output/vibrator/enable
   sleep 0.5
-  echo 0 > /sys/class/leds/button-backlight/brightness
+  echo 0 > /root/sys/class/leds/button-backlight/brightness
   sleep 0.5
 done

@@ -1,4 +1,4 @@
-#!/system/bin/sh
+#!/sbin/sh
 # Copyright (C) 2020-2021 Affe Null <affenull2345@gmail.com>
 # 
 # This program is free software: you can redistribute it and/or modify
@@ -16,8 +16,8 @@
 #
 
 while true; do
-  echo 255 > /sys/class/leds/button-backlight/brightness
+  echo 255 > /root/sys/class/leds/button-backlight/brightness
   sleep 1
-  echo 0 > /sys/class/leds/button-backlight/brightness
+  echo 0 > /root/sys/class/leds/button-backlight/brightness
   sleep 1
 done
