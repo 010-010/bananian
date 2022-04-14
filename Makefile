@@ -26,7 +26,7 @@ else
 ONDEV_BOOTSTRAP_CMD = @adb shell /data/bootstrap-debian.sh
 USE_QEMU_INSTALL =
 endif
-DEFAULT_PACKAGES = hicolor-icon-theme,adwaita-icon-theme,openssh-server,vim,network-manager,man-db,busybox,sudo,pulseaudio,$(EXTRA_PACKAGES)
+DEFAULT_PACKAGES = hicolor-icon-theme,adwaita-icon-theme,openssh-server,vim,network-manager,man-db,busybox,sudo,pulseaudio,libpam-systemd,$(EXTRA_PACKAGES)
 MIRROR = http://deb.debian.org/debian
 
 export DEBROOT
