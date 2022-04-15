@@ -141,6 +141,8 @@ copy-files: packages zImage
 	cp -rf zImage-modules $(DEBROOT)/lib/modules
 	mkdir -p $(DEBROOT)/var/cache/bananian-bootstrap
 	cp -f *.deb $(DEBROOT)/var/cache/bananian-bootstrap
+	mkdir -p $(DEBROOT)/etc/NetworkManager/system-connections
+	cp -f usbdata.nmconnection $(DEBROOT)/etc/NetworkManager/system-connections
 
 .PHONY: package
 ifeq ($(PACKAGE_PATH),)
