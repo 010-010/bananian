@@ -143,6 +143,7 @@ copy-files: packages zImage
 	cp -f *.deb $(DEBROOT)/var/cache/bananian-bootstrap
 	mkdir -p $(DEBROOT)/etc/NetworkManager/system-connections
 	cp -f usbdata.nmconnection $(DEBROOT)/etc/NetworkManager/system-connections
+	chmod 600 $(DEBROOT)/etc/NetworkManager/system-connections/usbdata.nmconnection
 
 .PHONY: package
 ifeq ($(PACKAGE_PATH),)
