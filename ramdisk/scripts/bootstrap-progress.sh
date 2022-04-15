@@ -33,6 +33,7 @@ case "$1" in
     kill %
     ;;
   error)
+    sync
     for step in 0 1 2 3 4; do
       echo 255 > /sys/class/leds/button-backlight/brightness
       echo 500 > /sys/class/timed_output/vibrator/enable
