@@ -15,9 +15,35 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-while true; do
-  echo 255 > /root/sys/class/leds/button-backlight/brightness
-  sleep 1
-  echo 0 > /root/sys/class/leds/button-backlight/brightness
-  sleep 1
-done
+periodic_blink () {
+  while true; do
+    echo 255 > /sys/class/leds/button-backlight/brightness
+    sleep 1
+    echo 0 > /sys/class/leds/button-backlight/brightness
+    sleep 1
+  done
+}
+
+case "$1" in
+  work)
+    periodic_blink &
+    while read line; do
+      echo '<bootstrap>' "$line"
+    done
+    kill %
+    ;;
+  error)
+    for step in 0 1 2 3 4; do
+      echo 255 > /sys/class/leds/button-backlight/brightness
+      echo 500 > /sys/class/timed_output/vibrator/enable
+      sleep 0.5
+      echo 0 > /sys/class/leds/button-backlight/brightness
+      sleep 0.5
+    done
+    ;;
+  success)
+    echo 100 > /sys/class/timed_output/vibrator/enable
+    ;;
+  *)
+    echo '<bootstrap-progress> invalid cmd' "$1"
+esac

@@ -16,9 +16,11 @@
 #
 
 export PATH=/sbin
-mount -t sysfs sysfs /sys
 mount -t devtmpfs devtmpfs /dev
+mount -t proc proc /proc
+mount -t sysfs sysfs /sys
 mount -t ext4 /dev/mmcblk1p2 /root
 mkdir -p /root/var/log/bananian/
 exec /init.logged >/root/var/log/bananian/boot.log 2>&1
 echo 'bananian-init: FATAL: failed to exec init.logged' >/root/var/log/bananian/boot.log
+echo 1000 > /sys/class/timed_output/vibrator/enable

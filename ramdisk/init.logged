@@ -34,13 +34,20 @@ done
 
 echo '<bananian-init> Finished executing scripts'
 
-mkdir -p /root/proc
-mount -t proc proc /root/proc
-mkdir -p /root/sys
-mount -o move /sys /root/sys
-mkdir -p /root/dev
-mount -o move /dev /root/dev
-mkdir -p /root/dev/pts
+force_mkdir () {
+  if [ -L "$1" ] || [ ! -d "$1" ]; then
+    rm -f "$1"
+  fi
+  mkdir -p "$1"
+}
+
+force_mkdir /root/proc
+mount -o bind /proc /root/proc
+force_mkdir /root/sys
+mount -o bind /sys /root/sys
+force_mkdir /root/dev
+mount -o bind /dev /root/dev
+force_mkdir /root/dev/pts
 mount -t devpts devpts /root/dev/pts
 
 for script in /scripts/post-mount/*; do
@@ -54,9 +61,12 @@ for script in /scripts/post-mount/*; do
   fi
 done
 
-echo '<bananian-init> Starting real init'
-sync
+echo '<bananian-init> Unmounting /dev, /sys and /proc'
+umount /sys
+umount /proc
+umount /dev
 
+echo '<bananian-init> Starting real init'
 exec run-init /root /sbin/init "$@"
 
 echo '<bananian-init> FAIL'
