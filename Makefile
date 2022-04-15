@@ -17,7 +17,7 @@
 
 DEBROOT = debroot
 OUTPUTS = initrd.img boot.img $(DEBROOT) debroot.tar
-# Pass USE_QEMU=1 to the make command to bootstrap on the build machine
+# Pass USE_QEMU=1 to the make command to bootstrap on the build machine (DEPRECATED)
 USE_QEMU = 0
 ifeq ($(USE_QEMU),1)
 ONDEV_BOOTSTRAP_CMD =
@@ -95,7 +95,7 @@ help:
 
 	@echo ''
 	@echo 'Installation targets:'
-	@echo '  install-to-device  - Install Bananian via adb'
+	@echo '  install-to-device  - Install Bananian via adb [DEPRECATED]'
 
 .PHONY: getversion
 getversion:
@@ -181,6 +181,7 @@ debroot.tar: $(DEBROOT) copy-files sysconfig $(USE_QEMU_INSTALL)
 
 .PHONY: install-to-device
 install-to-device: all
+	@echo 'WARNING: install-to-device is deprecated, the device now does all the bootstrapping itself'
 	adb wait-for-device
 	@adb push debroot.tar /data
 	@adb push boot.img /data

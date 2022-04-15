@@ -11,5 +11,5 @@ for more information. Source code can be downloaded from
 It is licensed under the GNU GPL version 2.0.
 
 The GNU GPL version 3 only applies to the files with a notice that
-they are licensed under the GNU GPL version 3, such as the Makefile and some of
-the installer scripts.
+they are licensed under the GNU GPL version 3, such as the Makefile, some of
+the installer scripts, and the shell scripts in the `ramdisk` directory.

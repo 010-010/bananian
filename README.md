@@ -41,8 +41,9 @@ and set up the build chroot:
 
 #### Starting the build
 
-Then run `make menuconfig` and after that `make` as root
-(Please make sure that nothing malicious happens).
+Then run `make menuconfig` and after that `make` as root.
+(Please make sure that nothing malicious happens, as you should always do
+when running software you don't trust as root.)
 
 To reconfigure, run `make menuconfig` again.
 Other configurators are also available:
@@ -52,8 +53,9 @@ Other configurators are also available:
  - `gconfig` (gtk-based, X11 front-end)
 
 ##### Running system setup in QEMU
-**QEMU mode is currently expermiental. It does not emulate the device or the
-Bananian system. You probably don't need to use it, this section is included
+**QEMU mode is deprecated. It does not emulate the device or the
+Bananian system. The bootstrap process is now run on first boot from the
+initramfs. You probably don't need to use this mode, this section is included
 just for reference.**
 QEMU mode runs `debootstrap --second-stage` and various other setup commands in
 the qemu-user emulator. The package qemu-user-static is required for this mode.
@@ -64,77 +66,37 @@ To enable it, append USE\_QEMU=1 to the make or make install-to-device command:
 ```
 
 #### Wireless networking
-During the build process, you will be prompted to edit a file named
-/etc/wpa\_supplicant.conf. In case you want to install manually, here is its
-format:
-
-```
-network={
-	ssid="[your network name]"
-	psk="[your network password]"
-}
-```
+Currently broken.
 
 ### Installing
 This step requires a **rooted** phone. See
 [BananaHackers](https://sites.google.com/view/bananahackers/root) for more info.
 
 Create two partitions on your SD card. Format the first one as FAT and the
-second as EXT4.
-Now you can run `make install-to-device` and it will install it automatically.
-Alternatively, you can install Bananian manually:
-
-Push boot.img to the phone and flash it to boot or recovery:
-
-    (on your phone)
-    # dd if=path/to/boot.img of=/dev/block/bootdevice/by-name/<boot or recovery>
-
-Then insert the SD card into the phone, push the debroot.tar file and run the
-following commands on your phone:
-
-    cd /data
-    mkdir debroot
-    busybox mount /dev/block/mmcblk1p2 debroot
-    cd debroot
-    busybox tar xvf /path/to/debroot.tar
-     (lots of output)
-    (The following commands until 'exit' are only needed if QEMU mode was
-    disabled.)
-    mount -o bind /dev dev
-    mount -o bind /sys sys
-    mount -o bind /proc proc
-    export PATH=/usr/local/sbin:/usr/sbin:/usr/local/bin:/usr/bin:$PATH
-    chroot . /bin/bash
-    debootstrap/debootstrap --second-stage
-    cd var/cache
-    dpkg -i bananui-base_0.0.1-armhf.deb device-startup_0.0.1-all.deb
-    adduser user
-     (enter data)
-    adduser user sudo
-    (These commands are always needed:)
-    exit
-    dd if=/path/to/boot.img" \
-		"of=/dev/block/bootdevice/by-name/<recovery or boot> bs=2048
-    <reboot recovery (or just reboot if you installed to `boot`)>
+second as EXT4. Unpack `debroot.tar` onto the EXT4 partition (as root!)
+and flash the `boot.img` onto the `recovery` partition
+(or the `boot` partition if you don't care about KaiOS). Please note that some
+firmware is loaded from the system partition, so you shouldn't erase KaiOS
+completely.
 
 ### Passwords
 
-If you used the on-device bootstrap method, the password will be set to
-the default value 'bananian'.
-If you use the QEMU bootstrap method, the password will be set at build time.
+The default password for the user `user` is `bananian`.
 
-### Shell access
-To get shell access to your phone, find out its IP address via your router.
-Then execute:
+### SSH access
+To get SSH access to your phone, connect it via USB to your PC.
+
+Then run the following on your PC:
 
 ```
-$ ssh user@X.X.X.X # Where X.X.X.X is your the phone's IP address
+$ ssh user@10.42.0.1
 ```
 
 To get root access, use sudo.
 
 ### Bugs
-Please report an issue if you find a bug.
+Please report an issue if you find a bug. If it's a UI bug, please report it
+in the <https://gitlab.com/bananian/wbananui> repository.
 
 ### Contribute
 If you would like to contribute, you can always submit a merge request.
@@ -151,3 +113,9 @@ This installer is distributed in the hope that it will be useful,
 but **WITHOUT ANY WARRANTY**; without even the implied warranty of
 **MERCHANTABILITY** or **FITNESS FOR A PARTICULAR PURPOSE**.  See the
 GNU General Public License for more details.
+
+Packages included in this distribution have different licenses.
+Please see the [LICENSE.notice.md](./LICENSE.notice.md) file,
+<https://www.debian.org/legal/licenses/> and the copyright files of the
+packages (usually found at `/usr/share/doc/<package>/copyright` on the
+installed system) more information
