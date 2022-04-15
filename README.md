@@ -79,6 +79,22 @@ and flash the `boot.img` onto the `recovery` partition
 firmware is loaded from the system partition, so you shouldn't erase KaiOS
 completely.
 
+
+#### First boot
+On first boot, the phone has to complete the installation by running a
+bootstrap process (`debootstrap --second-stage`) and a "setup" process which
+creates the system user account and installs bananian-specific packages.
+
+During each of these processes, the keypad backlight will blink. Once the
+process is completed, the phone will make a short vibration (100ms).
+
+**The bootstrap process can take more than 20 minutes. The setup process
+is much shorter and takes about a minute.**
+
+If an error occurs, it will vibrate and blink several times. Note that it won't
+reboot unless something crashes the system. Press and hold the Power button
+and the D-Pad "down" key to restart the device if it hangs.
+
 ### Passwords
 
 The default password for the user `user` is `bananian`.
