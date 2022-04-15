@@ -17,14 +17,15 @@
 
 ROOT_PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
-bootstrap () {
-  if PATH=$ROOT_PATH chroot /root /debootstrap/debootstrap --second-stage; then
+setup () {
+  PATH=$ROOT_PATH chroot /root /bin/bash -c 'cd /var/cache/bananian-bootstrap && dpkg -i *.deb && rm -f *.deb && adduser --gecos "Bananian User" --disabled-password user && adduser user sudo && addgroup --system ofono && adduser user ofono && adduser user audio && adduser user video && (echo user:bananian | chpasswd user) && touch /var/log/bananian/setup.stamp'
+  if [ "$?" = 0 ]; then
     /scripts/bootstrap-progress.sh success
   else
     /scripts/bootstrap-progress.sh error
   fi
 }
 
-if [ -d /root/debootstrap ]; then
-  bootstrap | /scripts/bootstrap-progress.sh work
+if [ ! -f /root/var/log/bananian/setup.stamp ]; then
+  setup | /scripts/bootstrap-progress.sh work
 fi
