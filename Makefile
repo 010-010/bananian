@@ -124,7 +124,7 @@ $(DEBROOT): packages
 	dpkg-scanpackages . > Packages
 	debootstrap \
 	  --include="$(DEFAULT_PACKAGES),$$(scripts/get-deps.pl Packages)" \
-	  --arch armhf --foreign --merged-usr bullseye $(DEBROOT)/ \
+	  --arch armhf --foreign --merged-usr bookworm $(DEBROOT)/ \
 	  $(MIRROR) || (rm -rf $(DEBROOT) && false)
 
 .PHONY: download
