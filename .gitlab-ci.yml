@@ -5,7 +5,7 @@ build:
   before_script:
     - apt update && apt install cpio abootimg debootstrap pbuilder qemu-user-static -y
   script:
-    - pbuilder create --distribution bullseye
+    - pbuilder create --distribution bookworm
     - cp allpkgs.config .config
     - make DEBROOT=/bananian-debroot
   artifacts:
