@@ -144,6 +144,8 @@ copy-files: packages zImage
 	mkdir -p $(DEBROOT)/etc/NetworkManager/system-connections
 	cp -f usbdata.nmconnection $(DEBROOT)/etc/NetworkManager/system-connections
 	chmod 600 $(DEBROOT)/etc/NetworkManager/system-connections/usbdata.nmconnection
+	cp -f usbdata2.nmconnection $(DEBROOT)/etc/NetworkManager/system-connections
+	chmod 600 $(DEBROOT)/etc/NetworkManager/system-connections/usbdata2.nmconnection
 
 .PHONY: package
 ifeq ($(PACKAGE_PATH),)
