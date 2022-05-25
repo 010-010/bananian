@@ -61,7 +61,7 @@ for script in /scripts/post-mount/*; do
   fi
 done
 
-if [ ! -x /root/sbin/init ]; then
+if [ ! -x /root/sbin/init ] && [ ! -x /root/lib/systemd/systemd ]; then
   echo '<bananian-init> Init not found'
   echo 500 > /sys/class/timed_output/vibrator/enable
   sleep 0.7

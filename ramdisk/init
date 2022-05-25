@@ -19,7 +19,11 @@ export PATH=/sbin
 mount -t devtmpfs devtmpfs /dev
 mount -t proc proc /proc
 mount -t sysfs sysfs /sys
-mount -t ext4 /dev/mmcblk1p2 /root
+retries=5
+while [ "$retries" -gt 0 ] && ! mount -t ext4 /dev/mmcblk1p2 /root; do
+  sleep 1
+  retries=$((retries-1))
+done
 mkdir -p /root/var/log/bananian/
 exec /init.logged >/root/var/log/bananian/boot.log 2>&1
 echo 'bananian-init: FATAL: failed to exec init.logged' >/root/var/log/bananian/boot.log
