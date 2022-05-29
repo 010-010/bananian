@@ -20,8 +20,6 @@ while (<packages/metadata/*>) {
   while (<$pkg>) {
     if (/^ConfigName: (.*)$/) {
       $config = $1;
-    } elsif (/^File: (.*)$/) {
-      unlink $1;
     } elsif (/^Dependency: (.*)$/) {
       push @deps, $1;
     }
