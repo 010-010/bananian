@@ -3,4 +3,4 @@ ConfigName: CONFIG_PACKAGE_DEVICE_STARTUP_ARGON
 Source: https://gitlab.com/bananian/device-startup-8110.git#devel
 Priority: optional
 
-File: device-startup_0.2.1_all.deb
+File: device-startup_0.2.3_all.deb

@@ -1,0 +1,9 @@
+DisplayName: Phone call user interface for Bananian
+ConfigName: CONFIG_PACKAGE_BANANUI_CALLUI
+Source: https://gitlab.com/bananian/bananui-callui.git#devel
+Priority: standard
+
+Dependency: CONFIG_PACKAGE_OFONO
+Dependency: CONFIG_PACKAGE_WBANANUI
+
+File: bananui-callui_0.1_armhf.deb
