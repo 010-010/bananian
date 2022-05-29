@@ -1,6 +1,6 @@
 DisplayName: ALSA UCM configuration for MSM8905 devices
 ConfigName: CONFIG_PACKAGE_ALSA_CONF_MSM8905
-Source: https://gitlab.com/bananian/alsa-ucm-conf-msm8905.git#devel
+Source: https://gitlab.com/bananian/alsa-ucm-conf-msm8905.git#master
 Priority: optional
 
 File: alsa-ucm-conf-msm8905_1_all.deb
