@@ -3,6 +3,6 @@ ConfigName: CONFIG_PACKAGE_WBANANUI
 Source: https://gitlab.com/bananian/wbananui.git#devel
 Priority: standard
 
-File: wbananui_0.1.0_armhf.deb
-File: libwbananui0_0.1.0_armhf.deb
-File: libwbananui0-dev_0.1.0_armhf.deb
+File: wbananui_0.1.2_armhf.deb
+File: libwbananui0_0.1.2_armhf.deb
+File: libwbananui0-dev_0.1.2_armhf.deb
