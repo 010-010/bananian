@@ -1,6 +1,6 @@
-DisplayName: WakeupManager daemon
+DisplayName: WakeupManager daemon (UNSTABLE)
 ConfigName: CONFIG_PACKAGE_WAKEUPD
 Source: https://gitlab.com/bananian/wakeupd.git#devel
-Priority: standard
+Priority: optional
 
 File: wakeupd_0.1.0_armhf.deb
