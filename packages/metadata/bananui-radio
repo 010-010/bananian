@@ -1,0 +1,9 @@
+DisplayName: FM radio app
+ConfigName: CONFIG_PACKAGE_BANANUI_RADIO
+Source: https://gitlab.com/bananian/bananui-radio.git#devel
+Priority: standard
+
+Dependency: CONFIG_PACKAGE_WBANANUI
+
+File: bananui-radio_0.1_armhf.deb
+File: hostless-routing-daemon_0.1_armhf.deb
