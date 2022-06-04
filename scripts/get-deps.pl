@@ -20,7 +20,10 @@ while (<$debpackages>) {
     next;
   }
   
-  if (/^(Pre-)?Depends: (.*)$/) {
+  if (/^Provides: (.*)$/) {
+    $local{$1} = 1;
+  }
+  elsif (/^(Pre-)?Depends: (.*)$/) {
     my @pdeps = ();
     for my $dep (split /\s*,\s*/, $2) {
       $dep =~ s/\s*[|].*$//;
